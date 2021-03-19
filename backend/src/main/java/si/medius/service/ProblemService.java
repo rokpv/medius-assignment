@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import si.medius.entity.Problem;
 import si.medius.repository.ProblemRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +19,7 @@ public class ProblemService {
     }
 
     public Iterable<Problem> getProblems() {
+        prepopulate();
         return problemRepository.findAll();
     }
 
@@ -31,5 +31,17 @@ public class ProblemService {
         }
 
         return problem.get();
+    }
+
+    public Problem createProblem(Problem problem) {
+        problemRepository.save(problem);
+        return problem;
+    }
+
+    private void prepopulate() {
+        Problem p1 = new Problem();
+        p1.setSize(3);
+        p1.setDescription("010101010");
+        problemRepository.save(p1);
     }
 }

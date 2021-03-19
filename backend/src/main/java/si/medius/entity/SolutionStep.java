@@ -1,16 +1,22 @@
 package si.medius.entity;
 
-import javax.persistence.*;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
-@Table(name = "solution_step")
 public class SolutionStep {
     public enum SolutionMove {
         ON, OFF
     }
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     @ManyToOne

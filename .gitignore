@@ -23,3 +23,6 @@
 hs_err_pid*
 
 frontend/node_modules
+
+.idea
+backend/medius-assignment.iml
