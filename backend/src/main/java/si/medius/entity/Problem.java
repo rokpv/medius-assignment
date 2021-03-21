@@ -25,6 +25,11 @@ public class Problem {
         this.description = description;
     }
 
+    public Problem(int size, String description) {
+        this.size = size;
+        this.description = description;
+    }
+
     public String getId() {
         return id;
     }

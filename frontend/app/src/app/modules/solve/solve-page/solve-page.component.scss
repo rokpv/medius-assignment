@@ -1,0 +1,15 @@
+.problem-list {
+  height: 100%;
+  overflow: scroll;
+
+  &__item {
+    padding: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid lightgrey;
+
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+}
+

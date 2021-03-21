@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {SolvePageComponent} from './solve-page/solve-page.component';
 import {SolveRoutingModule} from './solve-routing.module';
 import {ProblemViewModule} from '../../components/problem-view/problem-view.module';
+import {MatGridListModule} from "@angular/material/grid-list";
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import {ProblemViewModule} from '../../components/problem-view/problem-view.modu
     SolveRoutingModule,
     CommonModule,
     ProblemViewModule,
+    MatGridListModule,
   ],
   entryComponents: [
     SolvePageComponent

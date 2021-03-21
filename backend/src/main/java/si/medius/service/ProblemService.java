@@ -1,16 +1,20 @@
 package si.medius.service;
 
 import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import si.medius.entity.Problem;
 import si.medius.repository.ProblemRepository;
 
+import javax.annotation.PostConstruct;
 import java.util.Optional;
 
 @Service
 public class ProblemService {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final ProblemRepository problemRepository;
 
     @Autowired
@@ -19,7 +23,6 @@ public class ProblemService {
     }
 
     public Iterable<Problem> getProblems() {
-        prepopulate();
         return problemRepository.findAll();
     }
 
@@ -38,10 +41,29 @@ public class ProblemService {
         return problem;
     }
 
+    /**
+     * Prefills some data (since the Db is in-memory) for testing and demo purposes.
+     */
+    @PostConstruct
     private void prepopulate() {
-        Problem p1 = new Problem();
-        p1.setSize(3);
-        p1.setDescription("010101010");
-        problemRepository.save(p1);
+        Problem p = new Problem(3, "010101010");
+        problemRepository.save(p);
+
+        p = new Problem(5, "0000000100010100010000000");
+        problemRepository.save(p);
+
+        p = new Problem(8,
+                "00000000" +
+                        "00000000" +
+                        "11111111" +
+                        "00000000" +
+                        "11111111" +
+                        "00000000" +
+                        "11111111" +
+                        "00000000"
+        );
+        problemRepository.save(p);
+
+        logger.info("Prepopulated Problem table with 3 entries.");
     }
 }
