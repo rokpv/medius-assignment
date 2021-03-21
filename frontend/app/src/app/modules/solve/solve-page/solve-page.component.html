@@ -1,1 +1,13 @@
-<p>solve-page works!</p>
+<div class="problem-list">
+  <div class="problem-list__item" (click)="selectProblem(problem)" *ngFor="let problem of problems">
+    <app-problem-view size="80px" [dimension]="problem.size" [grid]="parseGrid(problem)" squareColor="red"></app-problem-view>
+  </div>
+</div>
+<app-problem-view
+  *ngIf="selectedProblem"
+  size="300px"
+  [dimension]="selectedProblem?.size || 3"
+  [grid]="grid"
+  (squareClicked)="onSquareClicked($event)">
+</app-problem-view>
+

@@ -2,14 +2,12 @@ package si.medius.controller;
 
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import si.medius.entity.Solution;
 import si.medius.service.SolutionService;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/solutions")
 public class SolutionController {
 
@@ -26,7 +24,7 @@ public class SolutionController {
     }
 
     @GetMapping("/problem/{id}")
-    public Solution getSolutionById(@PathVariable String id) throws NotFoundException {
+    public Solution getSolutionByProblemId(@PathVariable String id) throws NotFoundException {
         return solutionService.getSolutionByProblemId(id);
     }
 }

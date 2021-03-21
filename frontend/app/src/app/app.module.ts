@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import {HttpClientModule} from '@angular/common/http';
+import {ApiService} from './services/api.service';
 
 @NgModule({
   declarations: [
@@ -12,9 +14,10 @@ import {MatTabsModule} from '@angular/material/tabs';
   imports: [
     AppRoutingModule,
     BrowserModule,
-    MatTabsModule
+    MatTabsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

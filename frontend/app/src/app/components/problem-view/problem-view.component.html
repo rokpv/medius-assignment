@@ -1,0 +1,11 @@
+<div class="grid-list__container" [style.width]="size" [style.height]="size">
+  <mat-grid-list [cols]="dimension" rowHeight="1:1">
+    <mat-grid-tile
+      *ngFor="let square of grid; index as i"
+      colspan="1"
+      rowspan="1"
+      (click)="onSquareClicked(i)"
+      [style.background]="square === 1 ? 'white' : squareColor">
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

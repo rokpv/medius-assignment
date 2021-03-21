@@ -13,6 +13,7 @@ import si.medius.service.ProblemService;
 import si.medius.solver.LightsOutSolver;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/problems")
 public class ProblemController {
 

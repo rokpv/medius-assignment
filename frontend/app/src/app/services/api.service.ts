@@ -8,11 +8,11 @@ import {Problem} from '../models/Problem';
   providedIn: 'root'
 })
 export class ApiService {
-  readonly API_URL = 'localhost:8080/api';
+  readonly API_URL = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) { }
 
-  getProblem(): Observable<Problem[]> {
+  getProblems(): Observable<Problem[]> {
     return this.http.get<Problem[]>(`${this.API_URL}/problems/`);
   }
 
