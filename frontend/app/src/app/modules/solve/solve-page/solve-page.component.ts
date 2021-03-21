@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../../services/api.service';
 import {Problem} from '../../../models/Problem';
+import {Solution} from '../../../models/Solution';
 
 @Component({
   templateUrl: './solve-page.component.html',
@@ -12,6 +13,8 @@ export class SolvePageComponent implements OnInit {
   selectedProblem: Problem | null = null;
 
   grid: number[] = [];
+
+  solution: Solution | null = null;
 
   constructor(private apiService: ApiService) { }
 
@@ -39,6 +42,20 @@ export class SolvePageComponent implements OnInit {
     this.flipSquare(index + 1);
     this.flipSquare(index - dim);
     this.flipSquare(index + dim);
+  }
+
+  getSolution(): void {
+    if (!this.selectedProblem) {
+      console.warn('Selected problem is null!');
+      return;
+    }
+
+    // Reset the grid
+    this.selectProblem(this.selectedProblem);
+
+    this.apiService.getSolutionByProblemId(this.selectedProblem.id).subscribe(s => {
+      this.solution = s;
+    });
   }
 
   /**

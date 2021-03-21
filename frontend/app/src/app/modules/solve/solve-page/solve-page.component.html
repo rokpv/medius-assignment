@@ -7,14 +7,17 @@
     </div>
   </mat-grid-tile>
   <mat-grid-tile class="selected-problem" colspan="2">
+    <div class="selected-problem__container">
       <app-problem-view
         *ngIf="selectedProblem"
         size="300px"
         [dimension]="selectedProblem?.size || 3"
         [grid]="grid"
+        [solution]="solution"
         (squareClicked)="onSquareClicked($event)">
       </app-problem-view>
-
+      <button class="selected-problem__btn" mat-stroked-button color="primary" (click)="getSolution()">Get solution</button>
+    </div>
   </mat-grid-tile>
 </mat-grid-list>
 

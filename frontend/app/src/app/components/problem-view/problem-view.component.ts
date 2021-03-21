@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Problem} from '../../models/Problem';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Solution} from '../../models/Solution';
 
 @Component({
   selector: 'app-problem-view',
   templateUrl: './problem-view.component.html',
   styleUrls: ['./problem-view.component.scss']
 })
-export class ProblemViewComponent implements OnInit {
+export class ProblemViewComponent {
 
   @Output()
   readonly squareClicked = new EventEmitter<number>();
@@ -23,8 +23,8 @@ export class ProblemViewComponent implements OnInit {
   @Input()
   squareColor = '#999999';
 
-  ngOnInit(): void {
-  }
+  @Input()
+  solution: Solution | null = null;
 
   onSquareClicked(squareIndex: number): void {
     this.squareClicked.emit(squareIndex);
