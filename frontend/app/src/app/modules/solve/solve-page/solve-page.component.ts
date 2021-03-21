@@ -50,8 +50,7 @@ export class SolvePageComponent implements OnInit {
       return;
     }
 
-    // Reset the grid
-    this.selectProblem(this.selectedProblem);
+    this.resetGrid();
 
     this.apiService.getSolutionByProblemId(this.selectedProblem.id).subscribe(s => {
       this.solution = s;
@@ -65,6 +64,15 @@ export class SolvePageComponent implements OnInit {
    */
   parseGrid(problem: Problem): number[] {
     return problem.description.split('').map(s => parseInt(s, 10));
+  }
+
+  resetGrid(): void {
+    if (!this.selectedProblem) {
+      console.warn('Selected problem is null!');
+      return;
+    }
+
+    this.selectProblem(this.selectedProblem);
   }
 
   private flipSquare(index: number): void {

@@ -1,1 +1,14 @@
-<p>create-page works!</p>
+<mat-grid-list cols="4" rowHeight="90vh">
+  <mat-grid-tile colspan="1"></mat-grid-tile>
+  <mat-grid-tile colspan="2">
+    <div class="create-problem__container">
+      <app-problem-view size="300px" [dimension]="dimension" [grid]="grid" (squareClicked)="onSquareClicked($event)" squareColor="red"></app-problem-view>
+      <mat-form-field class="example-full-width">
+        <mat-label>Grid dimension</mat-label>
+        <input matInput type="number" value="3" (input)="onDimensionChanged($event)" min="3" max="8">
+      </mat-form-field>
+      <button mat-stroked-button color="primary" (click)="resetGrid()">Reset</button>
+      <button mat-flat-button color="primary" (click)="submitProblem()">Submit</button>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

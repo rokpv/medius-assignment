@@ -1,6 +1,6 @@
 .problem-list {
   height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
 
   &__item {
     padding: 5px;
@@ -13,10 +13,9 @@
   }
 }
 
-.selected-problem {
-  &__btn {
-    width: 100%;
-    margin-top: 5px;
-  }
+button {
+  width: 100%;
+  margin-top: 5px;
 }
+
 

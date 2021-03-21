@@ -16,7 +16,8 @@
         [solution]="solution"
         (squareClicked)="onSquareClicked($event)">
       </app-problem-view>
-      <button class="selected-problem__btn" mat-stroked-button color="primary" (click)="getSolution()">Get solution</button>
+      <button mat-stroked-button color="primary" (click)="getSolution()">Get solution</button>
+      <button mat-stroked-button color="primary" (click)="resetGrid()">Reset</button>
     </div>
   </mat-grid-tile>
 </mat-grid-list>
