@@ -4,4 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import si.medius.entity.Problem;
 
 public interface ProblemRepository extends CrudRepository<Problem, String> {
+    Iterable<Problem> findByOrderBySizeAsc();
 }

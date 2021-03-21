@@ -23,7 +23,7 @@ public class ProblemService {
     }
 
     public Iterable<Problem> getProblems() {
-        return problemRepository.findAll();
+        return problemRepository.findByOrderBySizeAsc();
     }
 
     public Problem getProblemById(String id) throws NotFoundException {
