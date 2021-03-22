@@ -1,24 +1,29 @@
 <mat-grid-list cols="4" rowHeight="90vh">
   <mat-grid-tile colspan="1">
-    <div class="problem-list">
-      <div class="problem-list__item" (click)="selectProblem(problem)" *ngFor="let problem of problems">
+    <div class="problem-list" *ngIf="problems.length > 0; else noProblems">
+      <div class="problem-list__item" (click)="selectProblem(problem)" *ngFor="let problem of problems" [class.selected]="problem.id === selectedProblem?.id">
         <app-problem-view size="80px" [dimension]="problem.size" [grid]="parseGrid(problem)" squareColor="red"></app-problem-view>
       </div>
     </div>
+    <ng-template #noProblems>
+      <div class="problem-list">No problems found. Visit the Create page to add some!</div>
+    </ng-template>
   </mat-grid-tile>
   <mat-grid-tile class="selected-problem" colspan="2">
-    <div class="selected-problem__container">
-      <app-problem-view
-        *ngIf="selectedProblem"
+    <div class="selected-problem__container" *ngIf="selectedProblem; else noProblemSelected">
+      <app-problem-view #problem
         size="300px"
         [dimension]="selectedProblem?.size || 3"
         [grid]="grid"
         [solution]="solution"
         (squareClicked)="onSquareClicked($event)">
       </app-problem-view>
-      <button mat-stroked-button color="primary" (click)="getSolution()">Get solution</button>
-      <button mat-stroked-button color="primary" (click)="resetGrid()">Reset</button>
+      <button mat-stroked-button color="primary" (click)="getSolution(problem)">Get solution</button>
+      <button mat-stroked-button color="primary" (click)="resetGrid(problem)">Reset</button>
     </div>
+    <ng-template #noProblemSelected>
+      <div>No problem selected.</div>
+    </ng-template>
   </mat-grid-tile>
 </mat-grid-list>
 

@@ -5,10 +5,15 @@
   &__item {
     padding: 5px;
     cursor: pointer;
+    border-radius: 3px;
     border-bottom: 1px solid lightgrey;
 
     &:hover {
       background-color: lightgray;
+    }
+
+    &.selected {
+      background-color: #673ab7;
     }
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../../../services/api.service';
 import {Problem} from '../../../models/Problem';
 import {Solution} from '../../../models/Solution';
+import {ProblemViewComponent} from '../../../components/problem-view/problem-view.component';
 
 @Component({
   templateUrl: './solve-page.component.html',
@@ -44,14 +45,13 @@ export class SolvePageComponent implements OnInit {
     this.flipSquare(index + dim);
   }
 
-  getSolution(): void {
+  getSolution(problemView: ProblemViewComponent): void {
     if (!this.selectedProblem) {
       console.warn('Selected problem is null!');
       return;
     }
 
-    this.resetGrid();
-
+    this.resetGrid(problemView);
     this.apiService.getSolutionByProblemId(this.selectedProblem.id).subscribe(s => {
       this.solution = s;
     });
@@ -66,16 +66,20 @@ export class SolvePageComponent implements OnInit {
     return problem.description.split('').map(s => parseInt(s, 10));
   }
 
-  resetGrid(): void {
+  resetGrid(problemView: ProblemViewComponent): void {
     if (!this.selectedProblem) {
       console.warn('Selected problem is null!');
       return;
     }
 
+    this.solution = null;
+    problemView.resetSolution();
     this.selectProblem(this.selectedProblem);
   }
 
   private flipSquare(index: number): void {
+    // TODO fix incorrect index bug on walls
+
     if (index < 0 || index > this.grid.length - 1) {
       return;
     }

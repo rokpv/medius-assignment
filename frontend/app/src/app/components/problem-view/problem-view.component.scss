@@ -1,8 +1,18 @@
 mat-grid-tile {
   border-radius: 3px;
+
+  &.solution {
+    background-color: black;
+  }
 }
 
-.grid-list__container {
-  background-color: lightgray;
-  padding: 10px;
+.grid-list {
+  &__container {
+    background-color: lightgray;
+    padding: 10px;
+  }
+
+  &__solution {
+    cursor: pointer;
+  }
 }

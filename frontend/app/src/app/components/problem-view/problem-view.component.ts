@@ -26,7 +26,27 @@ export class ProblemViewComponent {
   @Input()
   solution: Solution | null = null;
 
+  solutionIndices?: number[];
+  clickedSolutions: number[] = [];
+
   onSquareClicked(squareIndex: number): void {
     this.squareClicked.emit(squareIndex);
+  }
+
+  isSolution(i: number): boolean {
+    if (!this.solution) {
+      return false;
+    }
+
+    if (!this.solutionIndices) {
+      this.solutionIndices = this.solution.steps.map(s => s.index);
+    }
+
+    console.log(this.solutionIndices.includes(i));
+    return this.solutionIndices.includes(i);
+  }
+
+  resetSolution(): void {
+    this.clickedSolutions = [];
   }
 }
