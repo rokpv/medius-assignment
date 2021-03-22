@@ -29,22 +29,41 @@ export class SolvePageComponent implements OnInit {
   selectProblem(problem: Problem): void {
     this.grid = this.parseGrid(problem);
     this.selectedProblem = problem;
+    this.solution = null;
   }
 
+  /**
+   * Change light states according to game rules
+   */
   onSquareClicked(index: number): void {
     if (!this.selectedProblem) {
       console.warn('Selected problem is null.');
       return;
     }
-    const dim = this.selectedProblem.size;
+    const n = this.selectedProblem.size;
 
     this.flipSquare(index);
-    this.flipSquare(index - 1);
-    this.flipSquare(index + 1);
-    this.flipSquare(index - dim);
-    this.flipSquare(index + dim);
+
+    // Fix for incorrect lighting on left and right wall
+    if (index % n === 0) {
+      this.flipSquare(index + 1);
+      this.flipSquare(index - n);
+      this.flipSquare(index + n);
+    } else if ((index + 1) % n === 0) {
+      this.flipSquare(index - 1);
+      this.flipSquare(index - n);
+      this.flipSquare(index + n);
+    } else {
+      this.flipSquare(index + 1);
+      this.flipSquare(index - 1);
+      this.flipSquare(index - n);
+      this.flipSquare(index + n);
+    }
   }
 
+  /**
+   * Fetch solution for chosen problem from server
+   */
   getSolution(problemView: ProblemViewComponent): void {
     if (!this.selectedProblem) {
       console.warn('Selected problem is null!');
@@ -78,8 +97,6 @@ export class SolvePageComponent implements OnInit {
   }
 
   private flipSquare(index: number): void {
-    // TODO fix incorrect index bug on walls
-
     if (index < 0 || index > this.grid.length - 1) {
       return;
     }

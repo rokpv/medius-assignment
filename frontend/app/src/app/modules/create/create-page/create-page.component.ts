@@ -57,8 +57,6 @@ export class CreatePageComponent implements OnInit {
 
   /**
    * Displays a message for 5 sec.
-   * @param msg
-   * @private
    */
   private showMessage(msg: string): void {
     this.message = msg;

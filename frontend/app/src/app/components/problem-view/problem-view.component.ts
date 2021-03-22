@@ -7,7 +7,6 @@ import {Solution} from '../../models/Solution';
   styleUrls: ['./problem-view.component.scss']
 })
 export class ProblemViewComponent {
-
   @Output()
   readonly squareClicked = new EventEmitter<number>();
 
@@ -24,29 +23,36 @@ export class ProblemViewComponent {
   squareColor = '#999999';
 
   @Input()
-  solution: Solution | null = null;
+  set solution(x: Solution | null) {
+    this.mSolution = x;
+    this.resetSolution();
+  }
 
   solutionIndices?: number[];
   clickedSolutions: number[] = [];
+
+  private mSolution: Solution | null = null;
 
   onSquareClicked(squareIndex: number): void {
     this.squareClicked.emit(squareIndex);
   }
 
+  /**
+   * Checks if index i is in the solution indices array
+   */
   isSolution(i: number): boolean {
-    if (!this.solution) {
+    if (!this.mSolution) {
       return false;
     }
-
+    // cache indices for reuse
     if (!this.solutionIndices) {
-      this.solutionIndices = this.solution.steps.map(s => s.index);
+      this.solutionIndices = this.mSolution.steps.map(s => s.index);
     }
-
-    console.log(this.solutionIndices.includes(i));
     return this.solutionIndices.includes(i);
   }
 
   resetSolution(): void {
     this.clickedSolutions = [];
+    this.solutionIndices = undefined;
   }
 }
