@@ -2,7 +2,6 @@ package si.medius.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -21,6 +20,9 @@ public class SolutionStep {
     @JsonBackReference
     private Solution solution;
 
+    /**
+     * Index of square to click, if the board was a 1D array
+     */
     private int index;
 
     public SolutionStep() { }

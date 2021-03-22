@@ -9,7 +9,7 @@ export enum Routes {
 const routes: RoutesType = [
   { path: Routes.Solve, loadChildren: () => import('./modules/solve/solve.module').then(m => m.SolveModule) },
   { path: Routes.Create, loadChildren: () => import('./modules/create/create.module').then(m => m.CreateModule) },
-  { path: '*', redirectTo: 'solve' }
+  { path: '', redirectTo: Routes.Solve, pathMatch: 'full' }
 ];
 
 @NgModule({

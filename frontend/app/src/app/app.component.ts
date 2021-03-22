@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
     Routes.Create,
   ];
 
-  activeLink = '';
+  activeLink: string = Routes.Solve;
 
   ngOnInit(): void {
     // Fix for incorrect tab highlight during page refresh.
