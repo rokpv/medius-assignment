@@ -24,7 +24,6 @@ public class LightsOutSolver {
         int n = problem.getSize();
         int[] description = parseDescription(problem);
         boolean[][] toggle = toggleMatrix(n);
-        printMatrix(toggle);
 
         gaussianElimination(toggle, description, n);
         boolean[] result;
@@ -72,21 +71,40 @@ public class LightsOutSolver {
         return description;
     }
 
+    /**
+     * Returns a toggle matrix of size (N*N)x(N*N). Each column tells us which
+     * lights would be affected by switching that square.
+     */
     private boolean[][] toggleMatrix(int n) {
         boolean[][] matrix = new boolean[n * n][n * n];
-        for (int row = 0; row < n * n; row++) {
-            Arrays.fill(matrix[row], false);
-        }
 
-        for (int col = 0; col < n * n; col++) {
-            setSquare(matrix, col, col);
-            setSquare(matrix, col - 1, col);
-            setSquare(matrix, col + 1, col);
-            setSquare(matrix, col - n, col);
-            setSquare(matrix, col + n, col);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int col = rowMajorIndex(i, j, n);
+
+                // The pressed light is always affected
+                matrix[col][col] = true;
+
+                // Mark neighbours as affected
+                for (int di = -1; di <= 1 ; di++) {
+                    for (int dj = -1; dj <= 1 ; dj++) {
+                        if ((di == 0) == (dj == 0)) {
+                            continue;
+                        }
+
+                        if ((i + di < n && j + dj < n) && (i + di >= 0 && j + dj >= 0)) {
+                            matrix[col][rowMajorIndex(i + di, j + dj, n)] = true;
+                        }
+                    }
+                }
+            }
         }
 
         return matrix;
+    }
+
+    private int rowMajorIndex(int i, int j, int n) {
+        return i * n + j;
     }
 
     /**
@@ -108,11 +126,11 @@ public class LightsOutSolver {
 
             for (int row = pivotRow + 1; row < matrix.length; row++) {
                 if (matrix[row][col]) {
-                    for (int i = 0; i < n; i++) {
+                    for (int i = 0; i < matrix.length; i++) {
                         boolean rowWithPivot = matrix[nextFreeRow][i];
                         boolean rowToClear = matrix[row][i];
 
-                        matrix[row][i] = rowWithPivot ^ rowToClear;
+                        matrix[row][i] = rowWithPivot != rowToClear;
                     }
 
                     problem[row] ^= problem[nextFreeRow];
@@ -121,17 +139,6 @@ public class LightsOutSolver {
 
             nextFreeRow++;
         }
-    }
-
-    /**
-     * Checks for indices outside bounds and sets field in array at given index to 1
-     */
-    private void setSquare(boolean[][] matrix, int row, int col) {
-        if (row < 0 || row > matrix.length - 1 || col < 0 || col > matrix.length - 1) {
-            return;
-        }
-
-        matrix[row][col] = true;
     }
 
     private int findPivot(boolean[][] matrix, int startRow, int pivotColumn) {
@@ -185,14 +192,30 @@ public class LightsOutSolver {
         return result;
     }
 
-    private void printMatrix(boolean[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            StringBuilder log = new StringBuilder();
-
-            for (int j = 0; j < matrix.length; j++) {
-                log.append(matrix[i][j] ? "1" : "0");
-            }
-            logger.debug(log.toString());
-        }
-    }
+    /**
+     * Code for debug purposes
+     */
+//    private void printMatrix(boolean[][] matrix) {
+//        for (int i = 0; i < matrix.length; i++) {
+//            StringBuilder log = new StringBuilder();
+//
+//            for (int j = 0; j < matrix.length; j++) {
+//                log.append(matrix[i][j] ? "1" : "0");
+//            }
+//            logger.debug(log.toString());
+//        }
+//    }
+//
+//    private String mtxToStr(boolean[][] mtx) {
+//        StringBuilder s = new StringBuilder();
+//
+//        for (int i = 0; i < mtx.length; i++) {
+//            for (int j = 0; j < mtx.length; j++) {
+//                s.append(mtx[i][j] ? "1" : "0");
+//            }
+//            s.append("\n");
+//        }
+//
+//        return s.toString();
+//    }
 }
