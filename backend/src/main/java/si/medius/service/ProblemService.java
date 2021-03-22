@@ -6,9 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import si.medius.entity.Problem;
+import si.medius.entity.Solution;
 import si.medius.repository.ProblemRepository;
+import si.medius.repository.SolutionRepository;
 
-import javax.annotation.PostConstruct;
 import java.util.Optional;
 
 @Service
@@ -16,10 +17,13 @@ public class ProblemService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final ProblemRepository problemRepository;
+    private final SolutionRepository solutionRepository;
+
 
     @Autowired
-    public ProblemService(ProblemRepository problemRepository) {
+    public ProblemService(ProblemRepository problemRepository, SolutionRepository solutionRepository) {
         this.problemRepository = problemRepository;
+        this.solutionRepository = solutionRepository;
     }
 
     public Iterable<Problem> getProblems() {
@@ -36,15 +40,16 @@ public class ProblemService {
         return problem.get();
     }
 
-    public Problem createProblem(Problem problem) {
+    public Problem createProblem(Problem problem, Solution solution) {
         problemRepository.save(problem);
+        solutionRepository.save(solution);
         return problem;
     }
 
     /**
      * Prefills some data (since the Db is in-memory) for testing and demo purposes.
      */
-    @PostConstruct
+//    @PostConstruct
     private void prepopulate() {
         Problem p = new Problem(3, "010101010");
         problemRepository.save(p);

@@ -1,6 +1,8 @@
 package si.medius.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -10,29 +12,23 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class SolutionStep {
-    public enum SolutionMove {
-        ON, OFF
-    }
-
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     @ManyToOne
+    @JsonBackReference
     private Solution solution;
 
-    private SolutionMove move;
-
-    private int stepNumber;
+    private int index;
 
     public SolutionStep() { }
 
-    public SolutionStep(String id, Solution solution, SolutionMove move, int stepNumber) {
+    public SolutionStep(String id, Solution solution, int index) {
         this.id = id;
         this.solution = solution;
-        this.move = move;
-        this.stepNumber = stepNumber;
+        this.index = index;
     }
 
     public String getId() {
@@ -51,19 +47,11 @@ public class SolutionStep {
         this.solution = solution;
     }
 
-    public SolutionMove getMove() {
-        return move;
+    public int getIndex() {
+        return index;
     }
 
-    public void setMove(SolutionMove move) {
-        this.move = move;
-    }
-
-    public int getStepNumber() {
-        return stepNumber;
-    }
-
-    public void setStepNumber(int stepNumber) {
-        this.stepNumber = stepNumber;
+    public void setIndex(int index) {
+        this.index = index;
     }
 }

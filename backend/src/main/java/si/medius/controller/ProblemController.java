@@ -61,6 +61,6 @@ public class ProblemController {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Given problem is unsolvable.");
         }
 
-        return problemService.createProblem(problem);
+        return problemService.createProblem(problem, solution);
     }
 }
